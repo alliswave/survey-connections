@@ -5,81 +5,232 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='дата создания')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='дата обновления')),
-                ('text', models.TextField(verbose_name='текст вопроса')),
-                ('question_type', models.CharField(choices=[('single', 'одиночный выбор'), ('multiple', 'множественный выбор'), ('text', 'текстовый ответ')], default='single', max_length=20, verbose_name='тип вопроса')),
-                ('order', models.PositiveIntegerField(default=0, verbose_name='порядок')),
-                ('is_required', models.BooleanField(default=True, verbose_name='обязательный')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="дата создания"
+                    ),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="дата обновления"),
+                ),
+                ("text", models.TextField(verbose_name="текст вопроса")),
+                (
+                    "question_type",
+                    models.CharField(
+                        choices=[
+                            ("single", "одиночный выбор"),
+                            ("multiple", "множественный выбор"),
+                            ("text", "текстовый ответ"),
+                        ],
+                        default="single",
+                        max_length=20,
+                        verbose_name="тип вопроса",
+                    ),
+                ),
+                (
+                    "order",
+                    models.PositiveIntegerField(default=0, verbose_name="порядок"),
+                ),
+                (
+                    "is_required",
+                    models.BooleanField(default=True, verbose_name="обязательный"),
+                ),
             ],
             options={
-                'verbose_name': 'вопрос',
-                'verbose_name_plural': 'вопросы',
-                'ordering': ['order'],
+                "verbose_name": "вопрос",
+                "verbose_name_plural": "вопросы",
+                "ordering": ["order"],
             },
         ),
         migrations.CreateModel(
-            name='Survey',
+            name="Survey",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='дата создания')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='дата обновления')),
-                ('title', models.CharField(max_length=255, verbose_name='название')),
-                ('description', models.TextField(blank=True, verbose_name='описание')),
-                ('is_active', models.BooleanField(default=True, verbose_name='активен')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="дата создания"
+                    ),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="дата обновления"),
+                ),
+                ("title", models.CharField(max_length=255, verbose_name="название")),
+                ("description", models.TextField(blank=True, verbose_name="описание")),
+                (
+                    "is_active",
+                    models.BooleanField(default=True, verbose_name="активен"),
+                ),
             ],
             options={
-                'verbose_name': 'опрос',
-                'verbose_name_plural': 'опросы',
+                "verbose_name": "опрос",
+                "verbose_name_plural": "опросы",
             },
         ),
         migrations.CreateModel(
-            name='Answer',
+            name="Answer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='дата создания')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='дата обновления')),
-                ('text', models.CharField(max_length=255, verbose_name='текст ответа')),
-                ('order', models.PositiveIntegerField(default=0, verbose_name='порядок')),
-                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to='surveys.question', verbose_name='вопрос')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="дата создания"
+                    ),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="дата обновления"),
+                ),
+                ("text", models.CharField(max_length=255, verbose_name="текст ответа")),
+                (
+                    "order",
+                    models.PositiveIntegerField(default=0, verbose_name="порядок"),
+                ),
+                (
+                    "question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="answers",
+                        to="surveys.question",
+                        verbose_name="вопрос",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'вариант ответа',
-                'verbose_name_plural': 'варианты ответов',
-                'ordering': ['order'],
+                "verbose_name": "вариант ответа",
+                "verbose_name_plural": "варианты ответов",
+                "ordering": ["order"],
             },
         ),
         migrations.AddField(
-            model_name='question',
-            name='survey',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='surveys.survey', verbose_name='опрос'),
+            model_name="question",
+            name="survey",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="questions",
+                to="surveys.survey",
+                verbose_name="опрос",
+            ),
         ),
         migrations.CreateModel(
-            name='QuestionFlow',
+            name="QuestionFlow",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='дата создания')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='дата обновления')),
-                ('relationship_type', models.CharField(choices=[('any', 'любой ответ вопроса'), ('specific', 'конкретный ответ вопроса')], default='any', max_length=20, verbose_name='тип связи')),
-                ('source_answer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='triggered_relationships', to='surveys.answer', verbose_name='исходный ответ')),
-                ('source_question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='source_relationships', to='surveys.question', verbose_name='исходный вопрос')),
-                ('target_question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='target_relationships', to='surveys.question', verbose_name='целевой вопрос')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="дата создания"
+                    ),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="дата обновления"),
+                ),
+                (
+                    "relationship_type",
+                    models.CharField(
+                        choices=[
+                            ("any", "любой ответ вопроса"),
+                            ("specific", "конкретный ответ вопроса"),
+                        ],
+                        default="any",
+                        max_length=20,
+                        verbose_name="тип связи",
+                    ),
+                ),
+                (
+                    "source_answer",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="triggered_relationships",
+                        to="surveys.answer",
+                        verbose_name="исходный ответ",
+                    ),
+                ),
+                (
+                    "source_question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="source_relationships",
+                        to="surveys.question",
+                        verbose_name="исходный вопрос",
+                    ),
+                ),
+                (
+                    "target_question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="target_relationships",
+                        to="surveys.question",
+                        verbose_name="целевой вопрос",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'связь вопросов',
-                'verbose_name_plural': 'связи вопросов',
-                'constraints': [models.UniqueConstraint(fields=('source_question', 'target_question', 'relationship_type', 'source_answer'), name='unique_question_flow'), models.UniqueConstraint(condition=models.Q(('relationship_type', 'any')), fields=('source_question', 'target_question'), name='unique_any_answer_flow')],
+                "verbose_name": "связь вопросов",
+                "verbose_name_plural": "связи вопросов",
+                "constraints": [
+                    models.UniqueConstraint(
+                        fields=(
+                            "source_question",
+                            "target_question",
+                            "relationship_type",
+                            "source_answer",
+                        ),
+                        name="unique_question_flow",
+                    ),
+                    models.UniqueConstraint(
+                        condition=models.Q(("relationship_type", "any")),
+                        fields=("source_question", "target_question"),
+                        name="unique_any_answer_flow",
+                    ),
+                ],
             },
         ),
     ]
