@@ -13,7 +13,7 @@ help:
 	@echo "  make test MODULE=path/to/test.py - Run specific test module"
 	@echo "  make test REUSE=1 - Run tests reusing the test database"
 
-$(INSTALL_MARKER): requirements.txt
+$(INSTALL_MARKER): backend/requirements.txt
 	@echo "Installing dependencies using uv..."
 	@if ! command -v uv &> /dev/null; then \
 		echo "uv not found. Please install uv first."; \
@@ -23,7 +23,7 @@ $(INSTALL_MARKER): requirements.txt
 		echo "Creating virtual environment..."; \
 		python -m venv .venv; \
 	fi
-	@source .venv/bin/activate && uv pip install -r requirements.txt
+	@source .venv/bin/activate && uv pip install -r backend/requirements.txt
 	@mkdir -p $(dir $(INSTALL_MARKER))
 	@touch $(INSTALL_MARKER)
 	@echo "Installation complete!"
