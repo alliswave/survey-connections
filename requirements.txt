@@ -2,3 +2,6 @@ asgiref==3.8.1
 django==5.1.7
 sqlparse==0.5.3
 djangorestframework==3.14.0
+pytest==7.4.0
+pytest-django==4.5.2
+model-bakery==1.12.0

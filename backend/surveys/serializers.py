@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from surveys.models import QuestionFlow
 from django.utils.translation import gettext_lazy as _
+from surveys.constants import FLOW_TYPE_SPECIFIC_ANSWER
 
 
 class QuestionFlowSerializer(serializers.ModelSerializer):
@@ -26,7 +27,7 @@ class QuestionFlowSerializer(serializers.ModelSerializer):
                 _("Исходный и целевой вопросы не могут быть одинаковыми")
             )
 
-        if relationship_type == "specific_answer" and not source_answer:
+        if relationship_type == FLOW_TYPE_SPECIFIC_ANSWER and not source_answer:
             raise serializers.ValidationError(
                 _("Для типа связи 'конкретный ответ' требуется указать исходный ответ")
             )
